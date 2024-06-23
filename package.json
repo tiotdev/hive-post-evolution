@@ -13,6 +13,7 @@
     "@headlessui/react": "^2.1.0",
     "@hiveio/content-renderer": "github:tiotdev/hive-renderer",
     "@hiveio/hive-js": "^2.0.8",
+    "bs58": "^5.0.0",
     "html-react-parser": "^5.1.10",
     "next": "14.2.4",
     "react": "^18",

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["images.hive.blog", "img.travelfeed.io"],
+    domains: ["images.hive.blog"],
   },
 };
 
