@@ -1,6 +1,7 @@
 import ModalCloseBtn from "./ModalCloseBtn.js";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import Image from "components/Image";
 
 export default function PostLightbox({ lightboxImage, handleClose }) {
   return (
@@ -16,7 +17,7 @@ export default function PostLightbox({ lightboxImage, handleClose }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-50" />
+            <div className="fixed inset-0 bg-black/50" />
           </Transition.Child>
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -34,7 +35,20 @@ export default function PostLightbox({ lightboxImage, handleClose }) {
                   onClick={handleClose}
                 >
                   <div className="flex h-screen w-screen cursor-zoom-out">
-                    <div className="m-auto">{lightboxImage}</div>
+                    <div className="m-auto">
+                      <div className="h-screen w-screen">
+                        {lightboxImage && (
+                          <Image
+                            alt=""
+                            src={lightboxImage}
+                            fill
+                            className="max-h-screen max-w-full rounded object-contain object-center"
+                            onClick={handleClose}
+                            onKeyPress={handleClose}
+                          />
+                        )}
+                      </div>
+                    </div>
                   </div>
                   <ModalCloseBtn />
                 </Dialog.Panel>
