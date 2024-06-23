@@ -1,3 +1,325 @@
+import JsonFormatter from "components/Docs/JsonFormatter";
+import PostBtn from "components/PostBtn";
+import TableOfContents from "components/TableOfContents";
+import LinkTool from "components/LinkTool";
+import ImageGallery from "components/ImageGallery";
+
 # Hive Post Evolution
 
-This is the docs
+Formatting im Markdown is great for short, primarily text-based content (e.g. Reddit). But Hive is often used as a blogging platform for long-form content.
+
+This project aims to implement a standard for supporting advanced post features across Hive frontends.
+
+The Hive Post Evolution standard is designed to be fully backwards-compatible. The metadata for advanced features is saved in JSON that is saved to the post stringified. A frontend saving stringified JSON needs to be aware of escaping it properly.
+
+This repository showcases a basic implementation in React and Tailwind CSS to render posts with the Hive Post Evolution standard to serve as guidance for frontends for their own implementation.
+
+It does not provide an example of an implementation in the editor as this is very different on each frontend.
+
+## Advanced Components
+
+Hive users currently need to ressort to formatting tricks, e.g. generating image galleries with tables. But the experience falls short of the advanced components offered by blogging platforms such as Wordpress or Medium.
+
+With the Hive Post Evolution standard, advanced components are saved as stringified JSON to divs. Frontends that support this standard can parse the JSON and show the advanced component, frontends that don't, automatically show the placeholder content in the div.
+
+[View Example](/@jpphoto/example-post-showcasing-hive-post-evolution-components)
+
+### Button
+
+When a simple link is not enough, a button can serve as a highlighted call to action.
+
+<JsonFormatter>
+  {`
+{
+  "type": "button",
+  "data": {
+    "link": "https://hive.io/eco/",
+    "text": "Check out the Hive ecosystem"
+  }
+}
+`}
+</JsonFormatter>
+
+<PostBtn link="https://hive.io/eco/" text="Check out the Hive ecosystem" />
+
+### Table of Contents
+
+Each heading in the table of contents is clickable and leads to the linked heading.
+
+<JsonFormatter>
+  {`
+{
+    "type": "tableOfContents",
+    "data": {
+        "headings": [
+            {
+                "title": "Table of Contents"
+            },
+            {
+                "title": "Image Galleries",
+                "subheadings": [
+                    {
+                        "title": "Masonry Style"
+                    },
+                    {
+                        "title": "Short Masonry for Portraits"
+                    },
+                    {
+                        "title": "Gallery Style"
+                    }
+                ]
+            },
+            {
+                "title": "Button"
+            },
+            {
+                "title": "Link Card"
+            }
+        ]
+    }
+}
+`}
+</JsonFormatter>
+<TableOfContents
+  headings={[
+    {
+      title: "Table of Contents",
+    },
+    {
+      title: "Image Galleries",
+      subheadings: [
+        {
+          title: "Masonry Style",
+        },
+        {
+          title: "Short Masonry for Portraits",
+        },
+        {
+          title: "Gallery Style",
+        },
+      ],
+    },
+    {
+      title: "Button",
+    },
+    {
+      title: "Link Card",
+    },
+  ]}
+/>
+
+### Link Cards
+
+Other hive posts can be linked with link cards. The link card provides a compact preview, including the post title, description and if available a preview image.
+
+<JsonFormatter>
+  {`
+{
+    "type": "linkTool",
+    "data": {
+        "meta": {
+            "title": "TravelFeed Now Offers Free Hive Account Creation and HiveAuth Login! 🚀",
+            "description": "Hive offers a lot of benefits over web2 platforms - and those who try it, love it. And what’s better than trying to explain these benefits is giving[...]",
+            "image": "https://img.travelfeed.io/travelfeed%2F2024-06-08-14-06-111-social_hive_dark_watermark-jpg",
+            "author": "travelfeed",
+            "permlink": "travelfeed-now-supports-native-hive-account-creation-and-hiveauth-login"
+        }
+    }
+}
+`}
+</JsonFormatter>
+
+<LinkTool
+  title="TravelFeed Now Offers Free Hive Account Creation and HiveAuth Login! 🚀"
+  description="Hive offers a lot of benefits over web2 platforms - and those who try it, love it. And what’s better than trying to explain these benefits is giving[...]"
+  image="https://img.travelfeed.io/travelfeed%2F2024-06-08-14-06-111-social_hive_dark_watermark-jpg"
+  author="travelfeed"
+  permlink="travelfeed-now-supports-native-hive-account-creation-and-hiveauth-login"
+/>
+
+### Image Galleries
+
+Image Galleries are available in two styles: Masonry and slider.
+
+A click on the image in the gallery should open the image in a lightbox.
+
+<JsonFormatter>
+  {`
+{
+    "type": "imageGallery",
+    "data": {
+        "images": [
+            {
+                "url": "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-939-france-2-jpg",
+                "width": "1365",
+                "height": "2048",
+                "caption": "Paris"
+            },
+            {
+                "url": "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-526-02-hungary-jpg",
+                "width": "2048",
+                "height": "1152",
+                "caption": "Budapest"
+            },
+            {
+                "url": "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-881-02-turkey-jpg",
+                "width": "2048",
+                "height": "1152",
+                "caption": "Istanbul"
+            },
+            {
+                "url": "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-795-05-tfguide-jpg",
+                "width": "2048",
+                "height": "1280",
+                "caption": "Matera"
+            },
+            {
+                "url": "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-152-france-1-2-jpg",
+                "width": "2048",
+                "height": "1011",
+                "caption": "Menton"
+            }
+        ],
+        "style": "masonry"
+    }
+}
+`}
+</JsonFormatter>
+
+#### Masonry
+
+<ImageGallery
+  style="masonry"
+  images={[
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-939-france-2-jpg",
+      width: "1365",
+      height: "2048",
+      caption: "Paris",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-526-02-hungary-jpg",
+      width: "2048",
+      height: "1152",
+      caption: "Budapest",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-881-02-turkey-jpg",
+      width: "2048",
+      height: "1152",
+      caption: "Istanbul",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-795-05-tfguide-jpg",
+      width: "2048",
+      height: "1280",
+      caption: "Matera",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-152-france-1-2-jpg",
+      width: "2048",
+      height: "1011",
+      caption: "Menton",
+    },
+  ]}
+/>
+
+#### Masonry of two portraits
+
+<ImageGallery
+  style="masonry"
+  images={[
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-966-02-santa-catarina-palopo-jpg",
+      width: "1536",
+      height: "2048",
+      caption: "Staircase",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-978-03-santa-catarina-palopo-jpg",
+      width: "1536",
+      height: "2048",
+      caption: "Cat",
+    },
+  ]}
+/>
+
+#### Slider
+
+<ImageGallery
+  images={[
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-939-france-2-jpg",
+      width: "1365",
+      height: "2048",
+      caption: "Paris",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-526-02-hungary-jpg",
+      width: "2048",
+      height: "1152",
+      caption: "Budapest",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-881-02-turkey-jpg",
+      width: "2048",
+      height: "1152",
+      caption: "Istanbul",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-795-05-tfguide-jpg",
+      width: "2048",
+      height: "1280",
+      caption: "Matera",
+    },
+    {
+      url: "https://img.travelfeed.io/tvt3st%2F2024-06-23-09-06-152-france-1-2-jpg",
+      width: "2048",
+      height: "1011",
+      caption: "Menton",
+    },
+  ]}
+/>
+
+## Multilingual Posts
+
+Many users post with several languages in one post - neither great for readability nor for SEO.
+
+With the Hive Post Evolution standard, only the English version is saved in the post body.
+
+Frontends can support the option to create a copy of the post in a different language, opening this copy in a second editor. When the post is published, only the english version is saved to the post body. Other languages are saved to the languages object in the json_metadata.
+Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) is valid.
+
+<JsonFormatter>
+  {`
+{
+    "languages": {
+        "es": "Hola mundo",
+        "de": "Hallo Welt"
+    }
+}
+`}
+</JsonFormatter>
+
+Frontends can then show each language as a separate page. Logged-in can set their prefered language and will see see this version first.
+
+## Excerpt Posts
+
+Many bloggers who blog on their own domain don't want to publish to Hive because even with canonical URLs, this can harm their own domain due to duplicate content.
+
+Frontends can offer an optional setting that saves the full post only to the json_metadata and only an excerpt to the body. This uses the same standard as with multilingual posts to save the full post and adds an extra Boolean variable "onlyExerpt".
+
+Search engines and logged out users will only see an excerpt (with a prompt to log in). Logged in users will see the full post.
+
+<JsonFormatter>
+  {`
+{
+    "onlyExerpt": true,
+    "languages": {
+        "en": "Hello World",
+        "es": "Hola mundo",
+        "de": "Hallo Welt"
+    }
+}
+`}
+</JsonFormatter>

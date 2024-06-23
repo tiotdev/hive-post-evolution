@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import MDXLayout from "components/MDXLayout";
+import MDXLayout from "components/Docs/MDXLayout";
 import { Fragment } from "react";
 
 export default function App({ Component, pageProps }) {

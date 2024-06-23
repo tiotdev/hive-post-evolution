@@ -34,7 +34,7 @@ export default function TableOfContents(props) {
               return (
                 <li key={heading.title}>
                   <TocElement title={heading.title} index1={index1} />
-                  {heading.subheadings.length > 0 && (
+                  {heading.subheadings && heading.subheadings.length > 0 && (
                     <ol className="ml-5">
                       {heading.subheadings.map((subheading, index2) => {
                         return (
@@ -44,21 +44,22 @@ export default function TableOfContents(props) {
                               index1={index1}
                               index2={index2}
                             />
-                            {subheading.subheadings.length > 0 && (
-                              <ol className="ml-5">
-                                {subheading.subheadings.map((sh, index3) => {
-                                  return (
-                                    <TocElement
-                                      key={sh.title}
-                                      title={sh.title}
-                                      index1={index1}
-                                      index2={index2}
-                                      index3={index3}
-                                    />
-                                  );
-                                })}
-                              </ol>
-                            )}
+                            {subheading.subheadings &&
+                              subheading.subheadings.length > 0 && (
+                                <ol className="ml-5">
+                                  {subheading.subheadings.map((sh, index3) => {
+                                    return (
+                                      <TocElement
+                                        key={sh.title}
+                                        title={sh.title}
+                                        index1={index1}
+                                        index2={index2}
+                                        index3={index3}
+                                      />
+                                    );
+                                  })}
+                                </ol>
+                              )}
                           </li>
                         );
                       })}
