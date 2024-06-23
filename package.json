@@ -10,7 +10,7 @@
     "prettier": "prettier --write '**/*.js'"
   },
   "dependencies": {
-    "@hiveio/content-renderer": "^2.2.0",
+    "@hiveio/content-renderer": "github:tiotdev/hive-renderer",
     "@hiveio/hive-js": "^2.0.8",
     "html-react-parser": "^5.1.10",
     "next": "14.2.4",
