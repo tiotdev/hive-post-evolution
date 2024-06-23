@@ -1,4 +1,5 @@
 import MasonryImageGallery from "./MasonryImageGallery";
+import SlideImageGallery from "./SlideImageGallery";
 import LightboxGallery from "./LightboxGallery";
 import { useState } from "react";
 
@@ -10,7 +11,7 @@ export default function ImageGallery(props) {
       {props.style === "masonry" ? (
         <MasonryImageGallery {...props} toggleLightbox={setLightboxImage} />
       ) : (
-        <>TODO: Slider</>
+        <SlideImageGallery {...props} toggleLightbox={setLightboxImage} />
       )}
       <LightboxGallery
         lightboxImage={lightboxImage}
