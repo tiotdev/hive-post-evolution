@@ -3,6 +3,7 @@ import PostBtn from "components/PostBtn";
 import TableOfContents from "components/TableOfContents";
 import LinkTool from "components/LinkTool";
 import ImageGallery from "components/ImageGallery";
+import MdxLayout from "components/Docs/MDXLayout";
 
 # Hive Post Evolution
 
@@ -294,8 +295,8 @@ Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https
   {`
 {
     "languages": {
-        "es": "Hola mundo",
-        "de": "Hallo Welt"
+        "es": {"title": "Hola mundo", "body": "El texto va aquí."},
+        "de":{"title": "Hallo Welt", "body": "Text hierhin bitte."}
     }
 }
 `}
@@ -316,10 +317,14 @@ Search engines and logged out users will only see an excerpt (with a prompt to l
 {
     "onlyExerpt": true,
     "languages": {
-        "en": "Hello World",
-        "es": "Hola mundo",
-        "de": "Hallo Welt"
+          "en": {"title": "Hello world", "body": "Text goes here."},
+         "es": {"title": "Hola mundo", "body": "El texto va aquí."},
+        "de":{"title": "Hallo Welt", "body": "Text hierhin bitte."}
     }
 }
 `}
 </JsonFormatter>
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>;
+}
