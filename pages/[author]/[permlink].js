@@ -1,15 +1,9 @@
 import hive from "@hiveio/hive-js";
-import parseHtmlToReact from "helpers/parseHtmlToReact";
 import renderer from "helpers/renderContent";
+import Post from "components/Post";
 
 const PostPage = ({ post }) => {
-  const reactParsed = parseHtmlToReact(post.htmlBody);
-  return (
-    <div>
-      <h1>{post.title}</h1>
-      <div>{reactParsed}</div>
-    </div>
-  );
+  return <Post post={post} />;
 };
 
 // This function gets called at request time
