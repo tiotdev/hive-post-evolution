@@ -1,6 +1,7 @@
 import parse from "html-react-parser";
 import PostBtn from "components/PostBtn";
 import TableOfContents from "components/TableOfContents";
+import LinkTool from "components/LinkTool";
 import getSlug from "speakingurl";
 
 const parseHtmlToReact = htmlBody => {
@@ -26,6 +27,9 @@ const parseHtmlToReact = htmlBody => {
           }
           if (json.type === "tableOfContents") {
             return <TableOfContents headings={json.data.headings} />;
+          }
+          if (json.type === "linkTool") {
+            return <LinkTool {...json.data.meta} />;
           }
           return;
         } catch {
