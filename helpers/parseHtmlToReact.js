@@ -1,8 +1,9 @@
 import parse from "html-react-parser";
+import getSlug from "speakingurl";
 import PostBtn from "components/PostBtn";
 import TableOfContents from "components/TableOfContents";
 import LinkTool from "components/LinkTool";
-import getSlug from "speakingurl";
+import ImageGallery from "components/ImageGallery";
 
 const parseHtmlToReact = htmlBody => {
   const parseOptions = {
@@ -30,6 +31,9 @@ const parseHtmlToReact = htmlBody => {
           }
           if (json.type === "linkTool") {
             return <LinkTool {...json.data.meta} />;
+          }
+          if (json.type === "imageGallery") {
+            return <ImageGallery {...json.data} />;
           }
           return;
         } catch {
