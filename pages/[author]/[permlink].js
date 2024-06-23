@@ -1,10 +1,13 @@
 import hive from "@hiveio/hive-js";
+import parseHtmlToReact from "helpers/parseHtmlToReact";
+import renderer from "helpers/renderContent";
 
 const PostPage = ({ post }) => {
+  const reactParsed = parseHtmlToReact(post.htmlBody);
   return (
     <div>
       <h1>{post.title}</h1>
-      <p>{post.body}</p>
+      <div>{reactParsed}</div>
     </div>
   );
 };
@@ -31,8 +34,11 @@ export async function getServerSideProps({ params }) {
     if (!post || post.author === "") {
       return { notFound: true };
     }
+
+    const htmlBody = renderer.render(post.body);
+
     // Pass data to the page via props
-    return { props: { post } };
+    return { props: { post: { ...post, htmlBody } } };
   } catch (error) {
     console.error("Error fetching post from Hive:", error);
     return { notFound: true };
