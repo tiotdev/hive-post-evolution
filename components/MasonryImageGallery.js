@@ -3,9 +3,7 @@ import MasonryImage from "./MasonryImage.js";
 import ImageCaption from "./ImageCaption.js";
 import MasonryGrid from "./MasonryGrid.js";
 
-export default function MasonryImageGallery(props) {
-  const { images, toggleLightbox } = props;
-
+export default function MasonryImageGallery({ images, toggleLightbox }) {
   if (!images || images.length === 0) return <></>;
 
   // 2 portrait images

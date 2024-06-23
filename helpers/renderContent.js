@@ -12,8 +12,8 @@ const renderer = new DefaultRenderer({
   imageProxyFn: url => url,
   usertagUrlFn: account => "/@" + account,
   hashtagUrlFn: hashtag => "/trending/" + hashtag,
-  isLinkSafeFn: url => true,
-  addExternalCssClassToMatchingLinksFn: url => true,
+  isLinkSafeFn: () => true,
+  addExternalCssClassToMatchingLinksFn: () => true,
   ipfsPrefix: "https://ipfs.io/ipfs/", // IPFS gateway to display ipfs images
 });
 

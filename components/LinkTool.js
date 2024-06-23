@@ -21,7 +21,7 @@ export default function LinkTool({
               <div className="relative w-32 shrink-0 sm:w-56">
                 <div className="relative h-full w-32 transition-all duration-1000 group-hover:scale-110 sm:w-56">
                   <img
-                    className="object-cover object-center h-full"
+                    className="h-full object-cover object-center"
                     alt={title}
                     src={image}
                   />
@@ -37,7 +37,7 @@ export default function LinkTool({
                   <div className="mb-2 text-sm text-red-700 dark:text-red-400">
                     by {author}
                   </div>
-                  <div className="hidden text-base text-gray-700 dark:text-gray-300 sm:block">
+                  <div className="hidden text-base text-gray-700 sm:block dark:text-gray-300">
                     {description}
                   </div>
                 </div>

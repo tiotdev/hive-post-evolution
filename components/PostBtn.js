@@ -4,7 +4,7 @@ export default function PostBtn({ link, text }) {
   return (
     <div className="not-prose py-3 text-center">
       <a
-        className="bg-red-700 hover:bg-red-600 text-white p-2 rounded"
+        className="rounded bg-red-700 p-2 text-white hover:bg-red-600"
         href={link}
       >
         {text}

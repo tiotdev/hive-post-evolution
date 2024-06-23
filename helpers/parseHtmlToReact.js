@@ -7,7 +7,7 @@ import ImageGallery from "components/ImageGallery";
 
 const parseHtmlToReact = htmlBody => {
   const parseOptions = {
-    replace: ({ name, attribs, children, parent }) => {
+    replace: ({ name, attribs, children }) => {
       if (!attribs) return;
       if (
         (name === "h1" || name === "h2" || name === "h3" || name === "h4") &&

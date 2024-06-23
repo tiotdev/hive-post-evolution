@@ -1,7 +1,7 @@
 export default function ModalCloseBtn({ onClose }) {
   return (
     <button
-      className="fixed top-0 right-0 z-50 p-2 focus:animate-spin focus:outline-none"
+      className="fixed right-0 top-0 z-50 p-2 focus:animate-spin focus:outline-none"
       onClick={onClose}
       type="button"
     >
@@ -10,7 +10,7 @@ export default function ModalCloseBtn({ onClose }) {
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        className="h-6 w-6 text-gray-100"
+        className="size-6 text-gray-100"
       >
         <path
           strokeLinecap="round"
