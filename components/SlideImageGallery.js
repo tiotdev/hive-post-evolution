@@ -88,8 +88,10 @@ export default function ImageGallery(props) {
                   handleLightboxToggle={handleLightboxToggle}
                 />
               </div>
-              {image.alt && (
-                <div className="imgcaption py-1 font-sans">{image.alt}</div>
+              {image.caption && (
+                <div className="py-1 font-sans text-base font-medium">
+                  {image.caption}
+                </div>
               )}
             </div>
           );

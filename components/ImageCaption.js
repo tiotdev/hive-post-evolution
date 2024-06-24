@@ -10,7 +10,7 @@ export default function ImageCaption({ captions }) {
   if (!validCaptions || validCaptions.length === 0) return <></>;
 
   return (
-    <div className="imgcaption py-1 font-sans">
+    <div className="-mt-8 py-1 font-sans">
       {validCaptions.map(caption => {
         if (caption && caption.caption)
           return (
