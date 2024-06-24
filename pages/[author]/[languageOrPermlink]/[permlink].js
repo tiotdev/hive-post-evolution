@@ -1,6 +1,7 @@
 import hive from "@hiveio/hive-js";
 import renderer from "helpers/renderContent";
 import Post from "components/Post";
+import iso639Languages from "helpers/iso639Languages.json";
 
 const PostPage = ({ post }) => {
   return <Post post={post} />;
@@ -11,14 +12,25 @@ export async function getServerSideProps({ params }) {
   if (params.author[0] !== "@") {
     return {
       redirect: {
-        destination: `/@${params.author}/${params.permlink}`,
+        destination: `/@${params.author}/${params.languageOrPermlink}/${params.permlink}`,
         permanent: true,
       },
     };
   }
 
-  const { permlink } = params;
+  const language = params.languageOrPermlink;
+  if (language === "en")
+    return {
+      redirect: {
+        destination: `/${params.author}/${params.permlink}`,
+        permanent: true,
+      },
+    };
+
+  if (iso639Languages.indexOf(language) === -1) return { notFound: true };
+
   const author = params.author.replace(/@/, "");
+  const { permlink } = params;
 
   try {
     // Fetch the post from the Hive blockchain
@@ -29,27 +41,28 @@ export async function getServerSideProps({ params }) {
       return { notFound: true };
     }
 
-    let fullHtmlBody = "";
+    const meta = JSON.parse(post.json_metadata);
+    const langVersion = meta.languages[language];
+    if (!langVersion || !langVersion.title || !langVersion.body)
+      return { notFound: true };
 
-    try {
-      const meta = JSON.parse(post.json_metadata);
-      if (
-        meta &&
-        meta.onlyExcerpt &&
-        meta.languages &&
-        meta.languages.en &&
-        meta.languages.en.body
-      ) {
-        fullHtmlBody = renderer.render(JSON.parse(meta.languages.en.body));
-      }
-    } catch (err) {
-      console.error(err);
+    let htmlBody = renderer.render(JSON.parse(langVersion.body));
+
+    let fullHtmlBody = "";
+    if (meta.onlyExcerpt) {
+      fullHtmlBody = renderer.render(JSON.parse(langVersion.body));
+      htmlBody = renderer.render(
+        JSON.parse(langVersion.body).split("\n")[0] +
+          "\n\nLogin to read the full post",
+      );
     }
 
-    const htmlBody = renderer.render(post.body);
-
     // Pass data to the page via props
-    return { props: { post: { ...post, htmlBody, fullHtmlBody } } };
+    return {
+      props: {
+        post: { ...post, htmlBody, fullHtmlBody, title: langVersion.title },
+      },
+    };
   } catch (error) {
     console.error("Error fetching post from Hive:", error);
     return { notFound: true };
