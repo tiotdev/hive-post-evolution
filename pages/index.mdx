@@ -21,9 +21,19 @@ It does not provide an example of an implementation in the editor as this is ver
 
 Hive users currently need to resort to formatting tricks, e.g., generating image galleries with tables. But the experience falls short of the advanced components offered by blogging platforms such as WordPress or Medium.
 
-With the Hive Post Evolution standard, advanced components are saved as stringified JSON to divs. Frontends that support this standard can parse the JSON and show the advanced component; frontends that don't, automatically show the placeholder content within `<div>` elements.
+With the Hive Post Evolution standard, advanced components are saved as stringified JSON to the json attribute of divs. All `"` are escaped with `&quot;`.
 
-[View Example](/@jpphoto/example-post-showcasing-hive-post-evolution-components)
+This looks like this:
+
+```
+<div json="{&quot;type&quot;:&quot;button&quot;,&quot;data&quot;:{&quot;link&quot;:&quot;https://hive.io/eco/&quot;,&quot;text&quot;:&quot;Check out the Hive ecosystem&quot;}}"><a href="https://hive.io/eco/"><center>Check out the Hive ecosystem</center></a></div>
+```
+
+Frontends that support this standard can parse the JSON and show the advanced component; frontends that don't, automatically show the HTML placeholder content within `<div>` element.
+
+The placeholder should not merely state, "This is a placeholder for a non-supported component." Instead, it should strive to mimic the function of the original component. For example, the placeholder for a button should be a standard centered link, maintaining the intended functionality and appearance as closely as possible on legacy frontends.
+
+All advanced components are implemented in [this example post](/@jpphoto/example-post-showcasing-hive-post-evolution-components).
 
 ### Button
 
@@ -115,7 +125,7 @@ Each heading in the table of contents is clickable and leads to the linked headi
 
 ### Link Cards
 
-Other hive posts can be linked with link cards. The link card provides a compact preview, including the post title, description and if available a preview image. These information are fetched when the link card is inserted and stored in the JSON.
+Other Hive posts can be linked with link cards. The link card provides a compact preview, including the post title, description and if available a preview image. These information are fetched when the link card is inserted and stored in the JSON.
 
 <JsonFormatter>
   {`
@@ -301,7 +311,7 @@ Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https
 Each language object contains:
 
 - body (stringified). If not provided, the post body is used.
-- title (not stringified, but " needs to be escaped with &amp;quot;). If no title is provided, the post title is used.
+- title (not stringified, but `"` needs to be escaped with `&quot;`). If no title is provided, the post title is used.
 
 <JsonFormatter>
   {`

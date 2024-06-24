@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles for prose code */
+.prose p code,
+.prose li code {
+  @apply bg-gray-700 text-gray-200 p-1 rounded;
+}
+
+.prose p code::before,
+.prose li code::before {
+  content: "";
+}
+.prose p code::after,
+.prose li code::after {
+  content: "";
+}
