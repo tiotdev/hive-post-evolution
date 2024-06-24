@@ -29,10 +29,27 @@ export async function getServerSideProps({ params }) {
       return { notFound: true };
     }
 
+    let fullHtmlBody = "";
+
+    try {
+      const meta = JSON.parse(post.json_metadata);
+      if (
+        meta &&
+        meta.onlyExcerpt &&
+        meta.languages &&
+        meta.languages.en &&
+        meta.languages.en.body
+      ) {
+        fullHtmlBody = renderer.render(JSON.parse(meta.languages.en.body));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
     const htmlBody = renderer.render(post.body);
 
     // Pass data to the page via props
-    return { props: { post: { ...post, htmlBody } } };
+    return { props: { post: { ...post, htmlBody, fullHtmlBody } } };
   } catch (error) {
     console.error("Error fetching post from Hive:", error);
     return { notFound: true };

@@ -1,8 +1,13 @@
-import React from "react";
 import parseHtmlToReact from "helpers/parseHtmlToReact";
+import { AuthContext } from "components/Docs/AuthProvider";
+import React, { useContext } from "react";
 
 const BlogPost = ({ post }) => {
-  const reactParsed = parseHtmlToReact(post.htmlBody);
+  const { isLoggedIn } = useContext(AuthContext);
+
+  const reactParsed = parseHtmlToReact(
+    isLoggedIn && post.fullHtmlBody ? post.fullHtmlBody : post.htmlBody,
+  );
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
