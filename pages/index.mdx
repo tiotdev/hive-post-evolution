@@ -286,18 +286,22 @@ A click on the image in the gallery should open the image in a lightbox.
 
 Many users post with several languages in one post - neither great for readability nor for SEO.
 
-With the Hive Post Evolution standard, only the English version is saved in the post body.
+Frontends can support the option to create a copy of the post in a different language, opening this copy in a second editor.
 
-Frontends can support the option to create a copy of the post in a different language, opening this copy in a second editor. When the post is published, only the english version is saved to the post body.
+With the Hive Post Evolution standard, only one language (usually the English version) is saved in the post body. Other versions are stored in the json_metadata.
 
 Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) is valid.
 
-Each language object contains a body (stringified) and a title (not stringified, but " needs to be escaped with &amp;quot;).
+Each language object contains:
+
+- body (stringified). If not provided, the post body is used.
+- title (not stringified, but " needs to be escaped with &amp;quot;). If no title is provided, the post title is used.
 
 <JsonFormatter>
   {`
 {
     "languages": {
+        "en": {},
         "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\""},
         "de":{"title": "Hallo Welt", "body": "\\"## Text hierhin bitte.\\""}
     }
@@ -305,7 +309,9 @@ Each language object contains a body (stringified) and a title (not stringified,
 `}
 </JsonFormatter>
 
-Frontends can then show each language as a separate page. Logged-in can set their prefered language and will see see this version first.
+Frontends can then show each language as a separate page. And link to other versions.
+
+As an advanced feature, frontends can allow users to set their prefered language and show this version by default if available.
 
 [View Example](/@jpphoto/discovering-matera-a-journey-back-in-time-multilang-noexcerpt)
 
@@ -322,13 +328,28 @@ Search engines and logged out users will only see an excerpt (with a prompt to l
 {
     "onlyExerpt": true,
     "languages": {
-          "en": {"title": "Hello world", "body": "\\"## Text goes here.\\""},
-         "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\""},
+        "en": {"body": "\\"## Text goes here.\\""}
+    }
+}
+`}
+</JsonFormatter>
+
+It's also possible to do this for multilingual posts:
+
+<JsonFormatter>
+  {`
+{
+    "onlyExerpt": true,
+    "languages": {
+        "en": {"body": "\\"## Text goes here.\\""},
+        "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\""},
         "de":{"title": "Hallo Welt", "body": "\\"## Text hierhin bitte.\\""}
     }
 }
 `}
 </JsonFormatter>
+
+For multilingual posts, the frontend generates the excerpt to show to logged out users itself.
 
 [View Example](/@jpphoto/discovering-matera-a-journey-back-in-time)
 

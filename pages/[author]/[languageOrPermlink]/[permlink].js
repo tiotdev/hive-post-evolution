@@ -43,24 +43,40 @@ export async function getServerSideProps({ params }) {
 
     const meta = JSON.parse(post.json_metadata);
     const langVersion = meta.languages[language];
-    if (!langVersion || !langVersion.title || !langVersion.body)
-      return { notFound: true };
+    if (!langVersion) return { notFound: true };
+    const langBody = langVersion.body
+      ? JSON.parse(langVersion.body)
+      : post.body;
+    const langTitle = langVersion.title || post.title;
 
-    let htmlBody = renderer.render(JSON.parse(langVersion.body));
+    const availableLanguages = Object.keys(meta.languages);
+    const languageIndex = availableLanguages.indexOf(language);
+    if (languageIndex > -1) {
+      // remove the current language from available languages
+      availableLanguages.splice(languageIndex, 1);
+    }
+
+    let htmlBody = renderer.render(langBody);
 
     let fullHtmlBody = "";
     if (meta.onlyExcerpt) {
-      fullHtmlBody = renderer.render(JSON.parse(langVersion.body));
+      fullHtmlBody = renderer.render(langBody);
       htmlBody = renderer.render(
-        JSON.parse(langVersion.body).split("\n")[0] +
-          "\n\nLogin to read the full post",
+        langBody.split("\n")[0] + "\n\nLogin to read the full post",
       );
     }
 
     // Pass data to the page via props
     return {
       props: {
-        post: { ...post, htmlBody, fullHtmlBody, title: langVersion.title },
+        post: {
+          author: post.author,
+          permlink: post.permlink,
+          htmlBody,
+          fullHtmlBody,
+          title: langTitle,
+          availableLanguages,
+        },
       },
     };
   } catch (error) {
