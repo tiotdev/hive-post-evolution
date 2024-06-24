@@ -288,21 +288,26 @@ Many users post with several languages in one post - neither great for readabili
 
 With the Hive Post Evolution standard, only the English version is saved in the post body.
 
-Frontends can support the option to create a copy of the post in a different language, opening this copy in a second editor. When the post is published, only the english version is saved to the post body. Other languages are saved to the languages object in the json_metadata.
+Frontends can support the option to create a copy of the post in a different language, opening this copy in a second editor. When the post is published, only the english version is saved to the post body.
+
 Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) is valid.
+
+Each language object contains a body (stringified) and a title (not stringified, but " needs to be escaped with &amp;quot;).
 
 <JsonFormatter>
   {`
 {
     "languages": {
-        "es": {"title": "Hola mundo", "body": "El texto va aquí."},
-        "de":{"title": "Hallo Welt", "body": "Text hierhin bitte."}
+        "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\""},
+        "de":{"title": "Hallo Welt", "body": "\\"## Text hierhin bitte.\\""}
     }
 }
 `}
 </JsonFormatter>
 
 Frontends can then show each language as a separate page. Logged-in can set their prefered language and will see see this version first.
+
+[View Example](/@jpphoto/discovering-matera-a-journey-back-in-time)
 
 ## Excerpt Posts
 
@@ -317,13 +322,15 @@ Search engines and logged out users will only see an excerpt (with a prompt to l
 {
     "onlyExerpt": true,
     "languages": {
-          "en": {"title": "Hello world", "body": "Text goes here."},
-         "es": {"title": "Hola mundo", "body": "El texto va aquí."},
-        "de":{"title": "Hallo Welt", "body": "Text hierhin bitte."}
+          "en": {"title": "Hello world", "body": "\\"## Text goes here.\\""},
+         "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\""},
+        "de":{"title": "Hallo Welt", "body": "\\"## Text hierhin bitte.\\""}
     }
 }
 `}
 </JsonFormatter>
+
+[View Example](/@jpphoto/discovering-matera-a-journey-back-in-time)
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>;
