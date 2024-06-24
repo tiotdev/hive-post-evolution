@@ -1,3 +1,5 @@
+import languageCodeToName from "helpers/languageCodeToName.json";
+
 export default function LanguagePicker({ post }) {
   if (!post.availableLanguages || post.availableLanguages.length === 0)
     return <></>;
@@ -15,7 +17,7 @@ export default function LanguagePicker({ post }) {
                   : `/@${post.author}/${language}/${post.permlink}`
               }
             >
-              {language}
+              {languageCodeToName[language]}
             </a>{" "}
           </span>
         );
