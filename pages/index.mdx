@@ -7,27 +7,29 @@ import MdxLayout from "components/Docs/MDXLayout";
 
 # Hive Post Evolution
 
-Formatting im Markdown is great for short, primarily text-based content (e.g. Reddit). But Hive is often used as a blogging platform for long-form content.
+Formatting in Markdown is great for short, primarily text-based content (e.g., Reddit). But Hive is often used as a blogging platform for long-form content.
 
 This project aims to implement a standard for supporting advanced post features across Hive frontends.
 
 The Hive Post Evolution standard is designed to be fully backwards-compatible. The metadata for advanced features is saved in JSON that is saved to the post stringified. A frontend saving stringified JSON needs to be aware of escaping it properly.
 
-This repository showcases a basic implementation in React and Tailwind CSS to render posts with the Hive Post Evolution standard to serve as guidance for frontends for their own implementation.
+This repository showcases a basic implementation in React and Tailwind CSS to render posts with the Hive Post Evolution standard to serve as guidance for frontends for their own implementation. You can find the code on [Github](https://github.com/tiotdev/hive-post-evolution).
 
 It does not provide an example of an implementation in the editor as this is very different on each frontend.
 
 ## Advanced Components
 
-Hive users currently need to ressort to formatting tricks, e.g. generating image galleries with tables. But the experience falls short of the advanced components offered by blogging platforms such as Wordpress or Medium.
+Hive users currently need to resort to formatting tricks, e.g., generating image galleries with tables. But the experience falls short of the advanced components offered by blogging platforms such as WordPress or Medium.
 
-With the Hive Post Evolution standard, advanced components are saved as stringified JSON to divs. Frontends that support this standard can parse the JSON and show the advanced component, frontends that don't, automatically show the placeholder content in the div.
+With the Hive Post Evolution standard, advanced components are saved as stringified JSON to divs. Frontends that support this standard can parse the JSON and show the advanced component; frontends that don't, automatically show the placeholder content within `<div>` elements.
 
 [View Example](/@jpphoto/example-post-showcasing-hive-post-evolution-components)
 
 ### Button
 
 When a simple link is not enough, a button can serve as a highlighted call to action.
+
+The JSON stores the button link and text. This should be treated by the frontend the same as regular external links.
 
 <JsonFormatter>
   {`
@@ -44,6 +46,8 @@ When a simple link is not enough, a button can serve as a highlighted call to ac
 <PostBtn link="https://hive.io/eco/" text="Check out the Hive ecosystem" />
 
 ### Table of Contents
+
+Before a post is published, all major headings and their first and second level subheadings are saved to the JSON.
 
 Each heading in the table of contents is clickable and leads to the linked heading.
 
@@ -111,7 +115,7 @@ Each heading in the table of contents is clickable and leads to the linked headi
 
 ### Link Cards
 
-Other hive posts can be linked with link cards. The link card provides a compact preview, including the post title, description and if available a preview image.
+Other hive posts can be linked with link cards. The link card provides a compact preview, including the post title, description and if available a preview image. These information are fetched when the link card is inserted and stored in the JSON.
 
 <JsonFormatter>
   {`
@@ -290,7 +294,9 @@ Frontends can support the option to create a copy of the post in a different lan
 
 With the Hive Post Evolution standard, only one language (usually the English version) is saved in the post body. Other versions are stored in the json_metadata.
 
-Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) is valid.
+The languages object in the json_metadata contains all languages of the post.
+
+Any two-letter language code (lowercase) from the [ISO 639 standard Set 1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) is a valid key and has an object as value.
 
 Each language object contains:
 
@@ -309,9 +315,9 @@ Each language object contains:
 `}
 </JsonFormatter>
 
-Frontends can then show each language as a separate page. And link to other versions.
+Frontends can then show each language as a separate page and link to other versions.
 
-As an advanced feature, frontends can allow users to set their prefered language and show this version by default if available.
+As an advanced feature, frontends can allow users to set their preferred language and show this version by default if available.
 
 [View Example](/@jpphoto/discovering-matera-a-journey-back-in-time-multilang-noexcerpt)
 
@@ -319,9 +325,9 @@ As an advanced feature, frontends can allow users to set their prefered language
 
 Many bloggers who blog on their own domain don't want to publish to Hive because even with canonical URLs, this can harm their own domain due to duplicate content.
 
-Frontends can offer an optional setting that saves the full post only to the json_metadata and only an excerpt to the body. This uses the same standard as with multilingual posts to save the full post and adds an extra Boolean variable "onlyExerpt".
+Frontends can offer an optional setting that saves the full post only to the json_metadata and only an excerpt to the body. This uses the same standard as with multilingual posts to save the full post and adds an extra Boolean variable "onlyExcerpt".
 
-Search engines and logged out users will only see an excerpt (with a prompt to log in). Logged in users will see the full post.
+Search engines and logged-out users will only see an excerpt (with a prompt to log in). Logged-in users will see the full post.
 
 <JsonFormatter>
   {`
@@ -349,7 +355,7 @@ It's also possible to do this for multilingual posts:
 `}
 </JsonFormatter>
 
-For multilingual posts, the frontend generates the excerpt to show to logged out users itself.
+For multilingual posts, the frontend generates the excerpt to show to logged-out users itself.
 
 [View Example](/@jpphoto/discovering-matera-a-journey-back-in-time)
 
