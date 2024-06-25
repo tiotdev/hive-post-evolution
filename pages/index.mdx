@@ -312,6 +312,7 @@ Each language object contains:
 
 - body (stringified). If not provided, the post body is used.
 - title (not stringified, but `"` needs to be escaped with `&quot;`). If no title is provided, the post title is used.
+- description: Optional description that is shown in the post preview and SEO metadata. If no description is provided, the description from the first-level description key in the json_metadata is used if available.
 
 <JsonFormatter>
   {`
@@ -358,14 +359,15 @@ It's also possible to do this for multilingual posts:
     "onlyExerpt": true,
     "languages": {
         "en": {"body": "\\"## Text goes here.\\""},
-        "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\""},
-        "de":{"title": "Hallo Welt", "body": "\\"## Text hierhin bitte.\\""}
-    }
+        "es": {"title": "Hola mundo", "body": "\\"## El texto va aquí.\\"", "description": "El texto va aquí."},
+        "de":{"title": "Hallo Welt", "body": "\\"## Text hierhin bitte.\\"", "description": "Text hierhin bitte."}
+    },
+    "description": "Text goes here."
 }
 `}
 </JsonFormatter>
 
-For multilingual posts, the frontend generates the excerpt to show to logged-out users itself.
+For multilingual posts, the frontend shows the description from the selected language to logged-out users. If no description is provided, the frontend generates an excerpt from the full post.
 
 [View Example](/@jpphoto/discovering-matera-a-journey-back-in-time)
 
